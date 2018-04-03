@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.multipart.maxSize" value="10485760"></constant>
+	<!-- 开启动态方法调用 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	<!-- 自定义拦截器配置 -->
+	<package name="mydefault" extends="struts-default" abstract="true">
+		<interceptors>
+			<interceptor name="CheckLoginInterceptor" class="com.jt.web.interceptor.CheckLoginInterceptor"></interceptor>
+			<!-- 自定义拦截栈，注意将struts默认的拦截栈加入 -->
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="CheckLoginInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 重置默认拦截栈 -->
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<!-- 配置全局结果视图 -->
+		<global-results>
+			<result name="login">/login/login.jsp</result>
+		</global-results>
+	</package>
+	
+	<package name="login" extends="struts-default">
+		<!-- 登录 -->
+		<action name="login" class="com.jt.web.action.WorkerAction" method="login">
+			<result>/login/home.jsp</result>
+			<result name="input">/login/login.jsp</result>
+		</action>
+	</package>
+	
+	
+	<!-- extends="mydefault"指定该包下的所有action都经过自定义拦截器 -->
+	<package name="worker" extends="mydefault">
+		<!-- 添加员工 -->
+		<action name="addWorker" class="com.jt.web.action.WorkerAction" method="addWorker">
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">jpg,png,bmp</param>
+			</interceptor-ref>
+			<result type="redirectAction">listAllWorker</result>
+			<result name="input">/user/add.jsp</result>
+		</action>
+		
+		<!-- 显示所有员工列表 -->
+		<action name="listAllWorker" class="com.jt.web.action.WorkerAction" method="listAllWorker">
+			<result>/user/list.jsp</result>
+		</action>
+		
+		<!-- 显示员工详细信息 -->
+		<action name="viewWorker" class="com.jt.web.action.WorkerAction" method="viewWorker">
+			<result>/user/view.jsp</result>
+		</action>
+		<action name="workerPicShow" class="com.jt.web.action.WorkerAction" method="workerPicShow"></action>
+		
+		<!-- 相片下载 -->
+		<action name="workerPicDownload" class="com.jt.web.action.WorkerAction" method="workerPicDownload">
+			<result type="stream">
+				<!-- 给stream的结果类型注入参数：1.流的信息 2.告知浏览器以下载的方式打开  3.告知浏览器响应正文的MIME类型 -->
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename=${@java.net.URLEncoder@encode(oldFileName,"UTF-8")}</param>
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+		
+		<!-- 删除员工 -->
+		<action name="deleteWorker" class="com.jt.web.action.WorkerAction" method="deleteWorker">
+			<result type="redirectAction">listAllWorker</result>
+		</action>
+		<!-- 显示员工界面 -->
+		<action name="editWorkerUI" class="com.jt.web.action.WorkerAction" method="editWorkerUI">
+			<result>/user/edit.jsp</result>
+		</action>
+		
+		<!-- 修改员工信息 -->
+		<action name="editWorker" class="com.jt.web.action.WorkerAction" method="editWorker">
+			<result type="redirectAction">listAllWorker</result>
+			<result name="input">/user/edit.jsp</result>
+		</action>
+		
+		<!-- 条件筛选显示员工列表 -->
+		<action name="listWorkerByCondition" class="com.jt.web.action.WorkerAction" method="listWorkerByCondition">
+			<result>/user/list.jsp</result>
+		</action>
+	</package>
+	
+	<package name="restaurant" extends="mydefault">
+		<!-- 显示所有餐厅 -->
+		<action name="listAllRestaurant" class="com.jt.web.action.RestaurantAction" method="listAllRestaurant">
+			<result>/restaurant/list.jsp</result>
+		</action>	
+		
+		<!-- 按条件查询餐厅 -->
+		<action name="listRestaurantByCondition" class="com.jt.web.action.RestaurantAction" method="listRestaurantByCondition">
+			<result>/restaurant/list.jsp</result>
+		</action>
+		
+		<!-- 添加餐厅 -->
+		<action name="addRestaurant" class="com.jt.web.action.RestaurantAction" method="addRestaurant">
+			<result type="redirectAction">listAllRestaurant</result>
+			<result name="input">/restaurant/add.jsp</result>
+		</action>
+		
+		<!-- 显示编辑餐厅信息界面 -->
+		<action name="editRestaurantUI" class="com.jt.web.action.RestaurantAction" method="editRestaurantUI">
+			<result>/restaurant/edit.jsp</result>
+		</action>
+		
+		<!-- 编辑餐厅信息 -->
+		<action name="editRestaurant" class="com.jt.web.action.RestaurantAction" method="editRestaurant">
+			<result type="redirectAction">listAllRestaurant</result>
+			<result name="input">/restaurant/edit.jsp</result>
+		</action>
+		
+		<!-- 显示餐厅详细信息 -->
+		<action name="viewRestaurant" class="com.jt.web.action.RestaurantAction" method="viewRestaurant">
+			<result>/restaurant/view.jsp</result>
+		</action>
+		
+		<!-- 删除餐厅 -->
+		<action name="deleteRestaurant" class="com.jt.web.action.RestaurantAction" method="deleteRestaurant">
+			<result type="redirectAction">listAllRestaurant</result>
+		</action>
+	</package>
+
+	<package name="menu" extends="mydefault">
+		<!-- 显示所有菜单  -->
+		<action name="listAllMenu" class="com.jt.web.action.MenuAction" method="listAllMenu">
+			<result>/menu/list.jsp</result>
+		</action>
+		
+		<!-- 根据条件查询 -->
+		<action name="listMenuByCondition" class="com.jt.web.action.MenuAction" method="listMenuByCondition">
+			<result>/menu/list.jsp</result>
+		</action>
+		
+		<!-- 添加菜品 -->
+		<action name="addMenu" class="com.jt.web.action.MenuAction" method="addMenu">
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.allowedExtensions">jpg,png,bmp</param>
+			</interceptor-ref>
+			<result type="redirectAction">listAllMenu</result>
+			<result name="input">/menu/add.jsp</result>
+		</action>
+		
+		<!-- 显示修改菜品信息界面 -->
+		<action name="editMenuUI" class="com.jt.web.action.MenuAction" method="editMenuUI">
+			<result>/menu/edit.jsp</result>
+			<result name="input">/menu/list.jsp</result>
+		</action>
+		
+		<!-- 下载相片 -->
+		<action name="menuPicDownload" class="com.jt.web.action.MenuAction" method="menuPicDownload">
+			<result type="stream">
+				<!-- 给stream的结果类型注入参数：1.流的信息 2.告知浏览器以下载的方式打开  3.告知浏览器响应正文的MIME类型 -->
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename=${@java.net.URLEncoder@encode(oldFileName,"UTF-8")}</param>
+				<param name="contentType">application/octet-stream</param>
+			</result>
+		</action>
+		
+		<!-- 修改菜品信息 -->
+		<action name="editMenu" class="com.jt.web.action.MenuAction" method="editMenu">
+			<result type="redirectAction">listAllMenu</result>
+			<result name="input">/menu/edit.jsp</result>
+		</action>
+		
+		<!-- 显示菜品详情 -->
+		<action name="viewMenu" class="com.jt.web.action.MenuAction" method="viewMenu">
+			<result>/menu/view.jsp</result>
+		</action>
+		
+		<!-- 显示相片 -->
+		<action name="menuPicShow" class="com.jt.web.action.MenuAction" method="menuPicShow"></action>
+		
+		<!-- 删除菜品 -->
+		<action name="deleteMenu" class="com.jt.web.action.MenuAction" method="deleteMenu">
+			<result type="redirectAction">listAllMenu</result>
+		</action>
+	</package>
+
+	<package name="table" extends="mydefault">
+		<!-- 显示所有餐桌信息 -->
+		<action name="listAllTable" class="com.jt.web.action.DiningTableAction" method="listAllTable">
+			<result>/diningtable/list.jsp</result>
+		</action>
+		
+		<!-- 根据条件显示餐桌信息 -->
+		<action name="listTableByCondition" class="com.jt.web.action.DiningTableAction" method="listTableByCondition">
+			<result>/diningtable/list.jsp</result>
+		</action>
+		
+		<!-- 添加餐桌 -->
+		<action name="addTable" class="com.jt.web.action.DiningTableAction" method="addTable">
+			<result type="redirectAction">listAllTable</result>
+			<result name="input">/diningtable/add.jsp</result>
+		</action>
+		
+		<!-- 显示修改界面 -->
+		<action name="editTableUI" class="com.jt.web.action.DiningTableAction" method="editTableUI">
+			<result>/diningtable/edit.jsp</result>
+		</action>
+		
+		<!-- 修改餐桌信息 -->
+		<action name="editTable" class="com.jt.web.action.DiningTableAction" method="editTable">
+			<result type="redirectAction">listAllTable</result>
+			<result name="input">/diningtable/edit.jsp</result>
+		</action>
+		
+		<!-- 显示餐桌信息 -->
+		<action name="viewTable" class="com.jt.web.action.DiningTableAction" method="viewTable">
+			<result>/diningtable/view.jsp</result>
+		</action>
+		
+		<!-- 删除餐桌信息 -->
+		<action name="deleteTable" class="com.jt.web.action.DiningTableAction" method="deleteTable">
+			<result type="redirectAction">listAllTable</result>
+		</action>
+	</package>
+	
+	<package name="order" extends="mydefault">
+		<!-- 显示所有订单 -->
+		<action name="listAllOrder" class="com.jt.web.action.OrderInfoAction" method="listAllOrder">
+			<result>/orderinfo/list.jsp</result>
+		</action>
+		
+		<!-- 按条件查询订单 -->
+		<action name="listOrderByCondition" class="com.jt.web.action.OrderInfoAction" method="listOrderByCondition">
+			<result>/orderinfo/list.jsp</result>
+		</action>
+		<!-- 显示添加订单界面 -->
+		<action name="addOrderUI" class="com.jt.web.action.OrderInfoAction" method="addOrderUI">
+			<result>/orderinfo/add.jsp</result>
+		</action>
+		
+		<!-- 添加订单 -->
+		<action name="addOrder" class="com.jt.web.action.OrderInfoAction" method="addOrder">
+			<result type="redirectAction">listAllOrder</result>
+			<result name="input" type="redirectAction">addOrderUI</result>
+		</action>
+		
+		<!-- 显示修改订单界面 -->
+		<action name="editOrderUI" class="com.jt.web.action.OrderInfoAction" method="editOrderUI">
+			<result>/orderinfo/edit.jsp</result>
+		</action>
+		
+		<!-- 修改订单 -->
+		<action name="editOrder" class="com.jt.web.action.OrderInfoAction" method="editOrder">
+			<result type="redirectAction">listAllOrder</result>
+			<result name="input">/orderinfo/edit.jsp</result>
+		</action>
+		
+		<!-- 显示订单信息 -->
+		<action name="viewOrder" class="com.jt.web.action.OrderInfoAction" method="viewOrder">
+			<result>/orderinfo/view.jsp</result>
+		</action>
+		
+		<!-- 删除订单信息 -->
+		<action name="deleteOrder" class="com.jt.web.action.OrderInfoAction" method="deleteOrder">
+			<result type="redirectAction">listAllOrder</result>
+		</action>
+	</package>
+
+	<package name="chargeinfo" extends="mydefault">
+		<!-- 显示所有流水账 -->
+		<action name="listAllCharge" class="com.jt.web.action.ChargeInfoAction" method="listAllCharge">
+			<result>/chargeinfo/list.jsp</result>
+		</action>
+		<!-- 根据条件显示流水账 -->
+		<action name="listChargeByCondition" class="com.jt.web.action.ChargeInfoAction" method="listChargeByCondition">
+			<result>/chargeinfo/list.jsp</result>
+		</action>
+		<!-- 添加流水账 -->
+		<action name="addCharge" class="com.jt.web.action.ChargeInfoAction" method="addCharge">
+			<result type="redirectAction">listAllCharge</result>
+			<result name="input">/chargeinfo/add.jsp</result>
+		</action>
+		<!-- 显示修改界面 -->
+		<action name="editChargeUI" class="com.jt.web.action.ChargeInfoAction" method="editChargeUI">
+			<result>/chargeinfo/edit.jsp</result>
+		</action>
+		<!-- 修改流水账 -->
+		<action name="editCharge" class="com.jt.web.action.ChargeInfoAction" method="editCharge">
+			<result type="redirectAction">listAllCharge</result>
+			<result name="input">/chargeinfo/edit.jsp</result>
+		</action>
+		<!-- 显示流水账详细信息 -->
+		<action name="viewCharge" class="com.jt.web.action.ChargeInfoAction" method="viewCharge">
+			<result>/chargeinfo/view.jsp</result>
+		</action>
+		<!-- 删除流水账 -->
+		<action name="deleteCharge" class="com.jt.web.action.ChargeInfoAction" method="deleteCharge">
+			<result type="redirectAction">listAllCharge</result>
+		</action>
+	</package>
+	
+	
+	<!-- 移动端接口 -->
+	<package name="mobile" extends="json-default">
+		<!-- 登录接口 -->
+		<action name="mobileLogin" class="com.jt.web.action.WorkerAction" method="mobileLogin">
+			<result type="json">
+				<param name="root">loginJson</param>
+			</result>
+		</action>
+		<!-- 员工个人信息接口 -->
+		<action name="moblieWorkerInfo" class="com.jt.web.action.WorkerAction" method="moblieWorkerInfo">
+			<result type="json">
+				<param name="root">workerInfoJson</param>
+			</result>
+		</action>
+		<!-- 菜单列表接口 -->
+		<action name="mobileMenus" class="com.jt.web.action.MenuAction" method="mobileMenus">
+			<result type="json">
+				<param name="root">menuJson</param>
+			</result>
+		</action>
+		<!-- 菜单信息接口 -->
+		<action name="mobileMenuInfo" class="com.jt.web.action.MenuAction" method="mobileMenuInfo">
+			<result type="json">
+				<param name="root">menuInfoJson</param>
+			</result>
+		</action>
+		<!-- 餐桌列表接口 -->
+		<action name="mobileTables" class="com.jt.web.action.DiningTableAction" method="mobileTables">
+			<result type="json">
+				<param name="root">tableJson</param>
+			</result>
+		</action>
+		<!-- 开桌接口 -->
+		<action name="mobileTableOperator" class="com.jt.web.action.DiningTableAction" method="mobileTableOperator">
+			<result type="json">
+				<param name="root">tableOperatorJson</param>
+			</result>
+		</action>
+		<!-- 餐桌信息接口 -->
+		<action name="mobileTableInfo" class="com.jt.web.action.DiningTableAction" method="mobileTableInfo">
+			<result type="json">
+				<param name="root">tableInfoJson</param>
+			</result>
+		</action>
+		<!-- 订单信息接口 -->
+		<action name="mobileOrder" class="com.jt.web.action.OrderInfoAction" method="mobileOrder">
+			<result type="json">
+				<param name="root">orderJson</param>
+			</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.jt.domain">
+	<class name="Restaurant" table="information">
+		<id name="info_id" column="info_id">
+			 <generator class="assigned"></generator> 
+		</id>
+		<property name="info_name" column="info_name"></property>
+		<property name="info_address" column="info_address"></property>
+		<property name="info_startDate" column="info_startDate"></property>
+		<property name="info_businessHours" column="info_businessHours"></property>
+		<!-- 表达表之间是多对一的关系
+				 name：当前类属性中对应外表的属性
+				 column：与主表对应的列的属性名（需与外表同列名）
+				 property-ref：本表中与主表外键关联的列名
+				 class：外表的对应对象的类名-->
+		<many-to-one name="worker" column="w_name" class="Worker"  property-ref="w_name"></many-to-one>
+	</class>
+</hibernate-mapping>

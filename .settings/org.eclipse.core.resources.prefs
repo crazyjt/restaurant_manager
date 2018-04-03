@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//WebContent/css/dtree.css=UTF-8
+encoding//src/com/jt/web/filter/EncodingFilter.java=UTF-8
+encoding//src/com/jt/web/filter/MyRequest.java=UTF-8
+encoding//src/db/create_db.sql=UTF-8

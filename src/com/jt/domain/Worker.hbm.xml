@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.jt.domain">
+	<class name="Worker" table="worker">
+		<id name="w_id" column="w_id">
+			 <generator class="assigned"></generator> 
+		</id>
+		<property name="w_password" column="w_password"></property>
+		<property name="w_name" column="w_name"></property>
+		<property name="w_type" column="w_type"></property>
+		<property name="w_sex" column="w_sex"></property>
+		<property name="w_workTime" column="w_workTime"></property>
+		<property name="w_path" column="w_path"></property>
+		<property name="w_filename" column="w_filename"></property>
+		<!-- name：属性中对应外表的属性
+			 inverse：是否放弃维护权，默认为false（一般是主表放弃维护权）-->
+		<set name="restaurants" lazy="true">
+			<!-- column：外表中对应的列名
+				 property-ref：本表中与从表外键关联的列名 -->
+			<key column="w_name" property-ref="w_name"></key>
+			<!-- 表达表之间是一对多的关系 
+					class：外表的对应对象的类名-->
+			<one-to-many class="Restaurant" />
+		</set>
+		<set name="orderInfos" lazy="true">
+			<key column="w_id"></key>
+			<one-to-many class="OrderInfo" />
+		</set>
+		<set name="chargeinfos" lazy="true">
+			<key column="w_id"></key>
+			<one-to-many class="Chargeinfo" />
+		</set>
+	</class>
+</hibernate-mapping>

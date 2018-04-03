@@ -1,0 +1,68 @@
+body {
+	height: 100%;
+	margin: 0px;
+	text-align:left;
+	background-color: rgba(232, 232, 232, 0.9);
+}
+
+.leftDiv {
+	width: 100%;
+	height: 100%;
+}
+.leftUl {
+	height: 60%;
+}
+.leftLiFirst {
+	height: 16%;
+	list-style-type:none;
+	display: flex;
+	align-items: center;
+	justifi-content: center;
+	font-size: 1.2rem;
+	position: relative;
+}
+.leftLiSecond {
+	height: 14%;
+	list-style-type:none;
+	display: flex;
+	align-items: center;
+	justifi-content: center;
+	margin-left: 20%;
+}
+/* 制作由中间向两端伸展的下划线动画 */
+span {
+	position: relative;
+}
+/* 创建一个伪元素 */
+span:after {
+	content: "";
+    width: 0; /* 主要是改变下划线的宽度，由0到100% */
+    height: 2px;
+    background: #337AFC;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transition: all .6s;
+}
+/* 鼠标移到空间时的变化  */
+span:hover:after {/*原理是left:50%变成0%的同时，宽度从0%变成100%*/
+    left: 0%;
+    width: 100%;
+}
+a{
+    position: relative;/*设置相对定位*/
+}
+a:after {
+    content: "";
+    width: 0;
+    height: 2px;
+    background: #337AFC;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transition: all .6s;
+}
+a:hover:after {/*原理是left:50%变成0%的同时，宽度从0%变成100%*/
+    left: 0%;
+    width: 100%;
+}

@@ -1,0 +1,47 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	overflow-y: hidden;
+	height: 100%;
+	background: #ffffff;
+	flex-direction: column;
+}
+.viewTitle {
+	width: 100%;
+	height: 6%;
+	background: #afd1f3;
+	letter-spacing: 20px;
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-top: 2%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+} 
+.viewMiddle {
+	 width: 100%;
+	 height: 159px;
+	 display: flex;
+	 background: gray;
+}
+.viewBottom {
+	width: 100%;
+	height: 8%;
+	background: #f5fafe;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.viewRightPic {
+	flex-direction: column;
+	width: 100%;
+	height: 145px;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}

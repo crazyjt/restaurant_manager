@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<!-- 用"Action的类名-action名-validation.xml"命名是针对action进行验证 -->
+<validators>
+	<!-- 基于字段声明式验证 -->
+	<!-- name值为表单中需要验证的对应的属性 -->
+	<field name="w_id">
+		<!-- requiredstring是struts内置的验证类型，判断字符串是否为空或者null，并且去掉左右空格 -->
+		<field-validator type="requiredstring ">
+			<message>请输入员工登录id!</message>
+		</field-validator>
+	</field>
+</validators>

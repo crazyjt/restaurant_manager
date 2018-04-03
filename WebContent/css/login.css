@@ -1,0 +1,83 @@
+body {
+	background-color: #FFFFFF;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	display: -webkit-flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 8%;
+}
+
+.loginForm {
+	width: 720px;
+	height: 450px;
+	background-image: url(../images/login.jpg);
+	background-repeat: no-repeat;
+	opacity: 0.8;
+}
+
+.loginTitle {
+	width: 50%;
+	height: 10%;
+	font-size: 2.5rem;
+	font-family: Cursive;
+	font-style: italic;
+	font-weight: 800;
+	color: #EFF0EF;
+	margin-left: 3%;
+	padding-top: 3%;
+}
+
+.loginCenterPart {
+	width: 50%;
+	height: 50%;
+	margin-left: 25%;
+	margin-top: 15%;
+}
+
+.loginSpan{
+	width:30%;
+	color: #EFF0EF;
+	font-weight: 800;
+}
+
+.loginIdInput {
+	width: 75%;
+	height: 15%;
+	margin-right: 0;
+	border-radius:25px;
+	padding-left: 3%;
+}
+
+.loginPwdInput {
+	width: 75%;
+	height: 15%;
+	margin-right: 0;
+	margin-left: 4.3%;
+	border-radius:25px;
+	padding-left: 3%;
+}
+
+.loginSubmit {
+	width: 25%;
+	height: 15%;
+	margin-top: 8%;
+	margin-left: 20%;
+	background-color: #F9712D;
+	border-radius: 15px;
+}
+
+.loginReset {
+	width: 25%;
+	height: 15%;
+	margin-top: 8%;
+	margin-left: 10%;
+	background-color: #F9712D;
+	border-radius: 15px;
+}
+
+.loginError {
+	color: red;
+}

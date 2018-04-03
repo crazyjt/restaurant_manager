@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  
+<hibernate-mapping package="com.jt.domain">
+	<class name="Diningtable" table="diningtable">
+		<id name="d_id" column="d_id">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="d_no" column="d_no"></property>
+		<property name="d_status" column="d_status"></property>
+		<property name="d_num" column="d_num"></property>
+	
+		<set name="orderInfos" lazy="true">
+			<key column="d_id" ></key>
+			<one-to-many class="OrderInfo" />
+		</set>
+		
+		<set name="chargeinfos" lazy="true">
+			<key column="d_id"></key>
+			<one-to-many class="Chargeinfo" />
+		</set>
+	</class>
+</hibernate-mapping>

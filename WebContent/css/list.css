@@ -1,0 +1,89 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	overflow-y: hidden;
+	height: 100%;
+	background: #ffffff;
+}
+.listTopTitle {
+	width: 100%;
+	height: 6%;
+	background: #afd1f3;
+	letter-spacing: 25px;
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-top: 2%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.listTopCondition {
+	width: 100%;
+	height: 10%;
+	display: flex;
+	align-items: center;
+}
+.listTopState {
+	width: 10%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f5fafe;
+}
+.listTopInput {
+	width: 15%;
+	height: 100%;
+	margin-left: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+.topSubmit {
+	width: 45%;
+	position: absolute;
+	left: 0;
+	border-radius: 5px;
+}
+.topReset {
+	width: 45%;
+	position: absolute;
+	right: 0;
+	border-radius: 5px;
+}
+
+.listBottomAdd {
+	width: 100%;
+	height: 4.5%;
+	background: url("../images/add.png") no-repeat;
+	background-size: 3% 80%;
+	background-position: 49% 50%;
+	opacity: 0.6;
+}
+.listBottomAdd:HOVER {
+	width: 100%;
+	height: 5%;
+	background: url("../images/add.png") no-repeat;
+	background-size: 4% 100%;
+	background-position: 49% 0;
+	background-color: #F5FAFE;
+	opacity: 1;
+}
+/* 鼠标点击事件 */
+.listBottomAdd:ACTIVE {
+	width: 100%;
+	height: 4.5%;
+	background: url("../images/add.png") no-repeat;
+	background-size: 3% 80%;
+	background-position: 49% 50%;
+	opacity: 0.6;
+}
+.listBottomAddImg:hover {
+	height: 6%;
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.jt.domain">
+	<class name="Menu" table="menu">
+		<id name="m_id" column="m_id">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="m_name" column="m_name"></property>
+		<property name="m_price" column="m_price"></property>
+		<property name="m_inventory" column="m_inventory"></property>
+		<property name="m_type" column="m_type"></property>
+		<property name="m_path" column="m_path"></property>
+		<property name="m_filename" column="m_filename"></property>
+	
+		<set name="orderInfos" table="m_o_table" inverse="true">
+			<key column="m_id"></key>
+			<many-to-many class="OrderInfo" column="o_id"></many-to-many>
+		</set> 
+	</class>
+</hibernate-mapping>

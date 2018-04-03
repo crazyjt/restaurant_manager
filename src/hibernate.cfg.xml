@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		  <!-- hibernate.connection.driver_class : 连接数据库的驱动  -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		  <!-- hibernate.connection.username : 连接数据库的用户名 -->
+		<property name="hibernate.connection.username">root</property>
+		  <!-- hibernate.connection.password : 连接数据库的密码 -->
+		<property name="hibernate.connection.password">CHEN456321</property>
+		  <!-- hibernate.connection.url : 连接数据库的地址,路径 -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/restaurant</property>
+		
+		<!-- show_sql: 操作数据库时,会 向控制台打印sql语句 -->
+		<property name="show_sql">true</property>
+		<!-- format_sql: 打印sql语句前,会将sql语句先格式化  -->
+		<property name="format_sql">true</property>
+		<!-- 添加session线程开启 -->
+		<property name="current_session_context_class">thread</property>
+		<property name="hbm2ddl.auto">update</property>
+		<!-- 数据库方言配置 org.hibernate.dialect.MySQLDialect (选择最短的) -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- hibernate.connection.autocommit: 事务自动提交  -->
+		<property name="hibernate.connection.autocommit">true</property>
+		
+		<mapping resource="com/jt/domain/Worker.hbm.xml"/>
+		<mapping resource="com/jt/domain/Restaurant.hbm.xml"/>
+		<mapping resource="com/jt/domain/OrderInfo.hbm.xml"/>
+		<mapping resource="com/jt/domain/Menu.hbm.xml"/>
+		<mapping resource="com/jt/domain/Diningtable.hbm.xml"/>
+		<mapping resource="com/jt/domain/Chargeinfo.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

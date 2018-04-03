@@ -1,0 +1,39 @@
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	background: url("../images/topbg.png") no-repeat; 
+}
+
+.topDiv {
+	width: 50%;
+	height: 80%;
+	overflow: hidden;
+	background: url("../images/toptitle.png") no-repeat;
+	background-position: 10%;
+	display: flex;
+	
+}
+.topBottomDiv {
+	width: 50%;
+	height: 10%;
+	display: flex;
+}
+.topBottomLeft {
+	width: 50%;
+	height: 100%;
+	float: left;
+	margin-left: 45%;
+	padding-top: 11%;
+	color: white;
+	
+}
+.topBottomRight {
+	width: 50%;
+	height: 100%;
+	float: left;
+	text-align: right;
+	margin-right: 3%;
+	padding-top: 11%;
+	color: white;
+}

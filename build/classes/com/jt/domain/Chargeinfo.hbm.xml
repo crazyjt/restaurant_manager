@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.jt.domain">
+	<class name="Chargeinfo" table="chargeinfo">
+		<id name="c_id" column="c_id">
+			 <generator class="assigned"></generator> 
+		</id>
+		<property name="c_requestReceive" column="c_requestReceive"></property>
+		<property name="c_factReceive" column="c_factReceive"></property>
+		<property name="c_returnMoney" column="c_returnMoney"></property>
+		<property name="c_giveBillflg" column="c_giveBillflg"></property>
+		<property name="c_remark" column="c_remark"></property>
+		<!-- 表达表之间是多对一的关系
+				 name：当前类属性中对应外表的属性
+				 column：与主表对应的列的属性名（需与外表同列名）
+				 property-ref：本表中与主表外键关联的列名
+				 class：外表的对应对象的类名-->
+		<many-to-one name="worker" column="w_id" class="Worker"></many-to-one>
+		<many-to-one name="orderInfo" column="o_id" class="OrderInfo"></many-to-one>
+		<many-to-one name="diningtable" column="d_id" class="Diningtable"></many-to-one>
+	</class>
+</hibernate-mapping>
