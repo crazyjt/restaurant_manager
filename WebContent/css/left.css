@@ -44,7 +44,7 @@ span:after {
     left: 50%;
     transition: all .6s;
 }
-/* 鼠标移到空间时的变化  */
+/* 鼠标移到控件时的变化  */
 span:hover:after {/*原理是left:50%变成0%的同时，宽度从0%变成100%*/
     left: 0%;
     width: 100%;

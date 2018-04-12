@@ -142,7 +142,7 @@ public class DiningTableAction extends ActionSupport implements ModelDriven<Dini
 		return SUCCESS;
 	}
 	
-	//ÒÆ¶¯¶Ë²Í×À¿ª×À
+	//ÒÆ¶¯¶Ë²Í×À¿ª×À¡¢ÐÞ¸Ä¡¢Âòµ¥
 	private JSONObject tableOperatorJson;
 	public String mobileTableOperator() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -257,7 +257,6 @@ public class DiningTableAction extends ActionSupport implements ModelDriven<Dini
 //			Diningtable table = service.findTableById(jsonRequest.getString("d_id"));
 			newTable.setD_status("¿ÕÏÐ");
 			newTable.setD_num(0);
-			newTable.setD_no("");
 			int res1 = service.modifyTable(newTable);
 			if(res > 0 && res1 > 0) {
 				code = 200;
@@ -289,6 +288,7 @@ public class DiningTableAction extends ActionSupport implements ModelDriven<Dini
 		JSONObject jsonRequest = JSONObject.fromObject(jsonStr);
 		String d_id = jsonRequest.getString("d_id");
 		int code = 0;
+		float price = 0;
 		Diningtable newTable = new Diningtable();
 		try {
 			Diningtable returnTable = service.findTableById(d_id);
@@ -298,6 +298,10 @@ public class DiningTableAction extends ActionSupport implements ModelDriven<Dini
 			newTable.setD_status(returnTable.getD_status());
 			newTable.setChargeinfos(null);
 			newTable.setOrderInfos(null);
+			
+			IOrderInfoService orderInfoService = new OrderInfoServiceImpl();
+			OrderInfo orderByTable = orderInfoService.findOrderByTable(d_id, "·ñ");
+			price = orderByTable.getO_price();
 			code = 200;
 		} catch (Exception e) {
 			code = 300;
@@ -305,7 +309,10 @@ public class DiningTableAction extends ActionSupport implements ModelDriven<Dini
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("code", code);
-		map.put("table", newTable);
+		if (code == 200) {
+		  map.put("table", newTable);
+		  map.put("price", price);
+		}
 		tableInfoJson = JSONObject.fromObject(map);
 		return SUCCESS;
 	}

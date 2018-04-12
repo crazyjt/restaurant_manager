@@ -1,5 +1,8 @@
 package com.jt.web.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.print.DocFlavor.STRING;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +37,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 
 import net.sf.json.JSONObject;
+import sun.misc.BASE64Encoder;
 
 public class OrderInfoAction extends ActionSupport implements ModelDriven<OrderInfo> {
 
@@ -276,7 +281,8 @@ public class OrderInfoAction extends ActionSupport implements ModelDriven<OrderI
 		String d_id = jsonRequest.getString("d_id");
 
 		int code = 0;
-		Map<String, String> menuMap = new HashMap<>();  //用于存放 "菜名"-"已点份数" 的键值对
+		Map<String, List<String>> map = new HashMap<>();
+		
 		float o_price = 0;
 		try{
 			OrderInfo orderInfoByTable = service.findOrderByTable(d_id, "否");
@@ -285,19 +291,41 @@ public class OrderInfoAction extends ActionSupport implements ModelDriven<OrderI
 			IMenuService menuService = new MenuServiceImpl();
 			List<Menu> menusByTable = menuService.findAllMenu();
 			for(int i = 0; i < menusByTable.size(); i++) {
-				menuMap.put(menusByTable.get(i).getM_name(), m_orderByTableNum[i]);
+				List<String> returnList = new ArrayList<>();
+				returnList.add(menusByTable.get(i).getM_name());
+				returnList.add(String.valueOf(menusByTable.get(i).getM_inventory()));
+				returnList.add(String.valueOf(menusByTable.get(i).getM_price()));
+				returnList.add(m_orderByTableNum[i]);
+				
+				//菜品图片
+				byte[] bytes = null;
+				String picStr = "";
+				try {
+					String picPath = ServletActionContext.getServletContext().getRealPath("/pictures" + File.separator + menusByTable.get(i).getM_path() + File.separator + menusByTable.get(i).getM_filename());
+					File picFile = new File(picPath);
+					InputStream inputStream = new FileInputStream(picFile);
+					bytes = new byte[inputStream.available()];
+					inputStream.read(bytes);
+					inputStream.close();
+					BASE64Encoder encoder = new BASE64Encoder();
+					picStr = encoder.encode(bytes);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				returnList.add(picStr);
+				
+				map.put(String.valueOf(i), returnList);
 			}
-			System.out.println("menuMap: " + menuMap);
 			code = 200;
 		} catch (Exception e) {
 			code = 300;
 			e.printStackTrace();
 		}
-		Map<String, Object> map = new HashMap<>();
-		map.put("code", code);
-		map.put("menuMap", menuMap);
-		map.put("price", o_price);
-		orderJson = JSONObject.fromObject(map);
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("code", code);
+		returnMap.put("map", map);
+		returnMap.put("price", o_price);
+		orderJson = JSONObject.fromObject(returnMap);
 		return SUCCESS;
 	}
 	

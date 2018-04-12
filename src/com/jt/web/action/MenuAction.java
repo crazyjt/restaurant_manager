@@ -33,6 +33,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import net.sf.json.JSONObject;
+import sun.misc.BASE64Encoder;
 
 public class MenuAction extends ActionSupport implements ModelDriven<Menu> {
 
@@ -207,7 +208,7 @@ public class MenuAction extends ActionSupport implements ModelDriven<Menu> {
 
 	// 移动端显示菜单列表
 	private JSONObject menuJson;
-	public String mobileMenus() throws Exception {
+	public String mobileMenus() {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/json");
 		response.setCharacterEncoding("utf-8");
@@ -222,8 +223,8 @@ public class MenuAction extends ActionSupport implements ModelDriven<Menu> {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", code);
 		List<Menu> returnMenus = new ArrayList<>();
+		List<String> returnPicStr = new ArrayList<>();
 		for(int i = 0; i < menus.size(); i++) {
-//			System.out.println("before: " + menus.get(i).getOrderInfos());
 			Menu newMenu = new Menu();
 			newMenu.setM_id(menus.get(i).getM_id());
 			newMenu.setM_inventory(menus.get(i).getM_inventory());
@@ -233,13 +234,30 @@ public class MenuAction extends ActionSupport implements ModelDriven<Menu> {
 			newMenu.setM_price(menus.get(i).getM_price());
 			newMenu.setM_type(menus.get(i).getM_type());
 			newMenu.setOrderInfos(null);
+			
+			//菜品图片
+			byte[] bytes = null;
+			String picStr = "";
+			try {
+				String picPath = ServletActionContext.getServletContext().getRealPath("/pictures" + File.separator + newMenu.getM_path() + File.separator + newMenu.getM_filename());
+				File picFile = new File(picPath);
+				InputStream inputStream = new FileInputStream(picFile);
+				bytes = new byte[inputStream.available()];
+				inputStream.read(bytes);
+				inputStream.close();
+				BASE64Encoder encoder = new BASE64Encoder();
+				picStr = encoder.encode(bytes);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			returnPicStr.add(picStr);
 			returnMenus.add(newMenu);
 		}
-//		for(int i = 0; i < service.findAllMenu().size(); i++){
-//			System.out.println("after: " + service.findAllMenu().get(i).getOrderInfos());
-//		}
 		System.out.println("returnMenus: " + returnMenus);
-		map.put("menus", returnMenus);
+		if (code == 200) {
+		  map.put("menus", returnMenus);
+		  map.put("m_pic", returnPicStr);
+		}
 		System.out.println("map-menus: " + map.get("menus"));
 		menuJson = JSONObject.fromObject(map);
 		return SUCCESS;
@@ -273,7 +291,9 @@ public class MenuAction extends ActionSupport implements ModelDriven<Menu> {
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("code", code);
-		map.put("menu", newMenu);
+		if (code == 200) {
+		  map.put("menu", newMenu);
+		}
 		menuInfoJson = JSONObject.fromObject(map);
 		return SUCCESS;
 	}

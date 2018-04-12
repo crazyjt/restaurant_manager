@@ -33,6 +33,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 import com.sun.corba.se.spi.orbutil.threadpool.Work;
 
 import net.sf.json.JSONObject;
+import sun.misc.BASE64Encoder;
 
 public class WorkerAction extends ActionSupport implements ModelDriven<Worker> {
 
@@ -254,7 +255,7 @@ public class WorkerAction extends ActionSupport implements ModelDriven<Worker> {
 	
 	//移动端个人中心
 	private JSONObject workerInfoJson;
-	public String moblieWorkerInfo() throws Exception {
+	public String moblieWorkerInfo(){
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/json");
 		response.setCharacterEncoding("utf-8");
@@ -272,6 +273,27 @@ public class WorkerAction extends ActionSupport implements ModelDriven<Worker> {
 			map.put("w_sex", serviceWorker.getW_sex());
 			map.put("w_type", serviceWorker.getW_type());
 			map.put("w_workTime", serviceWorker.getW_workTime());
+			//图片转为base64
+			byte[] bytes = null;
+			String picStr = "";
+			try {
+				String picPath = ServletActionContext.getServletContext().getRealPath("/pictures" + File.separator + serviceWorker.getW_type() + File.separator + serviceWorker.getW_filename());
+				System.out.println("picPath: " + picPath);
+				File picFile = new File(picPath);
+				System.out.println("picFile: " + picFile);
+				InputStream inputStream = new FileInputStream(picFile);
+				System.out.println("inputStream: " + inputStream);
+				bytes = new byte[inputStream.available()];
+				inputStream.read(bytes);
+				inputStream.close();
+				BASE64Encoder encoder = new BASE64Encoder();
+				picStr = encoder.encode(bytes);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			map.put("w_pic", picStr);
+			
 			code = 200;
 		} else {
 			code = 300;
