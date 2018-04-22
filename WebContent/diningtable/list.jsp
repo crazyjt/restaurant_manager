@@ -19,7 +19,7 @@
 				<div class="listTopCondition">
 					<span class="listTopState">餐桌编号</span>
 					<s:textfield name="d_no"></s:textfield>
-					<span class="listTopState">餐厅状态</span>
+					<span class="listTopState">餐桌状态</span>
 					<s:select name="d_status" list="{'有客','空闲'}" headerKey="" headerValue="---选择状态---"></s:select>
 					<div class="listTopInput">
 						<input class="topSubmit" type="submit" id="search" name="search" value="查询" class="button_view"/>

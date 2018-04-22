@@ -35,6 +35,11 @@
 		</action>
 	</package>
 	
+	<package name="logout" extends="struts-default">
+		<action name="logout" class="com.jt.web.action.WorkerAction" method="logout">
+			<result type="redirect">/login/login.jsp</result>
+		</action>
+	</package>
 	
 	<!-- extends="mydefault"指定该包下的所有action都经过自定义拦截器 -->
 	<package name="worker" extends="mydefault">

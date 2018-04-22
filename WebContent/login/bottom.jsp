@@ -8,7 +8,7 @@
 	<body>
 		<div class="homeBottomDiv">
 			<img class="homeBottomImg"src="../images/homeauthor.jpg"></img>
-			<a class="homeBottomA" target="_blank" href="https://github.com/crazyjt">作者：crazyjt</a>
+			<a class="homeBottomA" target="_blank" href="https://github.com/crazyjt">Copyright © 2018 crazyjt</a>
 		</div>
 	</body>
 </HTML>

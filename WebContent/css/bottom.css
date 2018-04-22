@@ -11,14 +11,17 @@ body {
 	justify-content: center;
 	opacity: 0.9;
 }
+
 .homeBottomImg {
 	width: 5%;
 	height: 85%;
 	border: 1px solid;
 	border-radius: 50px;
+	margin-left: 15%;
 }
 .homeBottomA {
-	width: 8%;
+	width: 30%;
 	height: 30%;
 	margin-left: 1%;
+	color: #ffffff;
 }

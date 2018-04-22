@@ -31,6 +31,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.sun.corba.se.spi.orbutil.threadpool.Work;
+import com.sun.xml.internal.fastinfoset.stax.util.StAXParserWrapper;
 
 import net.sf.json.JSONObject;
 import sun.misc.BASE64Encoder;
@@ -46,11 +47,16 @@ public class WorkerAction extends ActionSupport implements ModelDriven<Worker> {
 
 	private IWorkerService service = new WorkerServiceImpl();
 
-	// 登录
+	//登录
 	public String login() throws Exception {
 		Worker serviceWorker = service.login(worker.getW_id(), worker.getW_password());
 		if (serviceWorker == null) {
 			addActionError("用户名或密码错误！"); // 添加错误信息用于界面显示
+			return INPUT;
+		}
+		System.out.println(serviceWorker.getW_type());
+		if (!"经理".equals(serviceWorker.getW_type()) && !"店长".equals(serviceWorker.getW_type()) && !"组长".equals(serviceWorker.getW_type())) {
+			addActionError("您没有访问权限!");
 			return INPUT;
 		}
 		HttpSession session = ServletActionContext.getRequest().getSession();
@@ -58,6 +64,13 @@ public class WorkerAction extends ActionSupport implements ModelDriven<Worker> {
 		return SUCCESS;
 	}
 
+	//注销
+	public String logout() throws Exception {
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		session.setAttribute("worker", null);
+		return SUCCESS;
+	}
+	
 	// 表单上传的文件
 	private File w_pic;
 	// 文件名

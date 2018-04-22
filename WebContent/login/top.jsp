@@ -41,6 +41,9 @@
 				用户名：
 				<font color="#A7D9FA" >${sessionScope.worker.w_name }</font>
 			</div>
+			<div class="topLogOut" >
+				<s:a action="logout" cssClass="topLogOutText" target="_parent">注销</s:a>
+			</div>
 		</div>
 
 	</body>

@@ -29,7 +29,7 @@ body {
 	
 }
 .topBottomRight {
-	width: 50%;
+	width: 40%;
 	height: 100%;
 	float: left;
 	text-align: right;
@@ -37,3 +37,18 @@ body {
 	padding-top: 11%;
 	color: white;
 }
+.topLogOut {
+	width: 10%;
+	height: 10%;
+	margin-top: 11%;
+	margin-right: 2%;
+	color: white;
+	text-align: center;
+}
+.topLogOutText {
+	color: white;
+}
+.topLogOutText:HOVER {
+	color: blue;
+}
+

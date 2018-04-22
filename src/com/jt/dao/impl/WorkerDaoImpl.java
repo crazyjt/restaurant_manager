@@ -32,7 +32,7 @@ public class WorkerDaoImpl implements WorkerDao {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	@Override
 	public int insertWorker(Worker worker) {
 		try {
@@ -152,4 +152,5 @@ public class WorkerDaoImpl implements WorkerDao {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

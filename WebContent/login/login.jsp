@@ -7,6 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
 <link href="${pageContext.request.contextPath }/css/login.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+/* 跳出iframe框架 */
+if(top.location!=self.location)top.location=self.location;
+</script>
 </head>
 <body>
 	<s:form action="login">
