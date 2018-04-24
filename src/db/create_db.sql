@@ -28,7 +28,7 @@ CREATE TABLE `information` (
   CONSTRAINT `fk_info_owner` FOREIGN KEY (`w_name`) REFERENCES `worker` (`w_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*菜品信息表*/
+/*菜单信息表*/
 CREATE TABLE `menu` (
   `m_id` char(5) NOT NULL,
   `m_name` char(10) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE `orderinfo` (
   CONSTRAINT `fk_o_workerid` FOREIGN KEY (`w_id`) REFERENCES `worker` (`w_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*菜品_订单中间表*/
+/*订单菜品中间表*/
 CREATE TABLE `m_o_table` (
   `o_id` varchar(255) NOT NULL,
   `m_id` varchar(255) NOT NULL DEFAULT 'null',
@@ -78,7 +78,7 @@ CREATE TABLE `m_o_table` (
   KEY `FK46333A2C2D60AFFF` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*流水账信息表*/
+/*结账流水表*/
 CREATE TABLE `chargeinfo` (
   `c_id` char(5) NOT NULL,
   `o_id` char(5) NOT NULL,
