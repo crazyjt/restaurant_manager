@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 //将已经是乱码的参数,重新编码回中文
-public class MyRequest extends  HttpServletRequestWrapper{
+public class MyRequest extends HttpServletRequestWrapper{
 	
 	private Map<String,String[]> params =new HashMap<String, String[]>();
 	
@@ -25,7 +25,7 @@ public class MyRequest extends  HttpServletRequestWrapper{
 				//每个key可能对应多个value，故用数组
 				String[] values = en.getValue();
 				if(values!=null){
-				String[] newValues = new String[values.length];
+				    String[] newValues = new String[values.length];
 					for(int i = 0; i < values.length ;i++){
 						try {
 							newValues[i] = new String(values[i].getBytes("ISO-8859-1"),"UTF-8");
@@ -35,10 +35,9 @@ public class MyRequest extends  HttpServletRequestWrapper{
 					}
 					//4 将解决的键值对 放入新的map
 					params.put(en.getKey(), newValues);
-					}
+				}
 			}
 		}
-		
 	}
 
 	@Override

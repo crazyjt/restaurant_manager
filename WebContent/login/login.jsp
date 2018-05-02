@@ -6,6 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
+<link rel="icon" href="../images/bitbug_favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../images/bitbug_favicon.ico" type="image/x-icon"/>
+<link rel="bookmark" href="../images/bitbug_favicon.ico" type="image/x-icon" />
 <link href="${pageContext.request.contextPath }/css/login.css" type="text/css" rel="stylesheet">
 <script type="text/javascript">
 /* 跳出iframe框架 */

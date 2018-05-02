@@ -4,6 +4,10 @@
 	<head>
 		<meta http-equiv="Content-Language" content="zh-cn">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>restaurant_manager</title>
+		<link rel="icon" href="../images/bitbug_favicon.ico" type="image/x-icon"/>
+		<link rel="shortcut icon" href="../images/bitbug_favicon.ico" type="image/x-icon"/>
+		<link rel="bookmark" href="../images/bitbug_favicon.ico" type="image/x-icon" />
     <link href="${pageContext.request.contextPath }/css/home.css" type="text/css" rel="stylesheet">
   </head>
   
